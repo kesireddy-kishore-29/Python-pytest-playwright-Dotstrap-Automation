@@ -6,7 +6,7 @@ Everything below is stated as it is. Where something was not run, it says so.
 
 | What | State |
 |---|---|
-| **GitHub Actions** | `ci.yml` and `nightly.yml` pass actionlint 1.7.12 with shellcheck 0.11.0 but have **never run on GitHub**: the repository had no remote while it was built. Not yet exercised: Python 3.12 (everything ran on 3.13 locally), Chromium on Linux, building the API flagship's service and starting the UI flagship's app in the nightly, artifact hand-off to the publish job, GitHub Pages, the live badge. |
+| **GitHub Actions** | `ci.yml` and `nightly.yml` pass actionlint 1.7.12 with shellcheck 0.11.0 but have **never run on GitHub**: the repository had no remote while it was built. Not yet exercised: Python 3.12 on Linux (locally, Python 3.12.15 and 3.13.7 both pass the lint, type check and the default run on Windows), Chromium on Linux, building the API flagship's service and starting the UI flagship's app in the nightly, artifact hand-off to the publish job, GitHub Pages, the live badge. |
 | **Flagship services in CI** | The reference-service tests and the hybrid test run only when the repository variables `FLAGSHIP_OWNER`, `API_FLAGSHIP_REF` and `UI_FLAGSHIP_REF` are set; otherwise they skip. Verified locally against both services. |
 | **Browsers** | Chromium only. Firefox and WebKit are not wired in (pytest-playwright's `--browser` would add them). |
 | **Operating systems** | Run on Windows 11 only. |

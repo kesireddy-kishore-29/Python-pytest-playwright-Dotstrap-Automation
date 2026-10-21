@@ -18,7 +18,7 @@ family of four repositories.
 | Tests | 52 in the default run (30 framework unit tests, 13 API, 9 UI), 5 of them in the smoke; 15 runs of 4 checks in the live smoke; 3 deliberate failures. All passed in the latest local runs (the deliberate failures failed, as designed) |
 | Run time | About 16 s for the 52 with four pytest-xdist workers; about a minute for the live smoke, one worker |
 | Features traced | 24 feature IDs, shared with the other repositories; a test without one stops collection |
-| Status | Verified locally on Windows 11 with Python 3.13 and headless Chromium. The workflows (Python 3.12) pass actionlint and shellcheck but **have not run on GitHub yet** ([known issues](docs/known-issues.md)) |
+| Status | Verified locally on Windows 11 with Python 3.13 and 3.12 and headless Chromium. The workflows (Python 3.12) pass actionlint and shellcheck but **have not run on GitHub yet** ([known issues](docs/known-issues.md)) |
 
 ## Standards demonstrated
 
