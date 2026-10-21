@@ -1,0 +1,105 @@
+[build-system]
+requires = ["hatchling==1.32.4"]
+build-backend = "hatchling.build"
+
+[project]
+name = "python-pytest-automation-framework"
+version = "1.0.0"
+description = "API and UI test automation with pytest, requests, pydantic and Playwright for Python."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{ name = "Kesireddy Kishore" }]
+# Exact pins: a test framework must be reproducible. Upgrade deliberately, all at once.
+dependencies = [
+  "pytest==9.1.1",
+  "requests==2.34.2",
+  "pydantic==2.14.1",
+  "pydantic-settings==2.16.1",
+  "playwright==1.64.0",
+  "pytest-playwright==0.10.0",
+  "pytest-xdist==3.8.0",
+  "pytest-rerunfailures==16.7",
+  "allure-pytest==2.16.2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "ruff==0.17.1",
+  "mypy==2.4.0",
+  "pre-commit==4.7.0",
+  "types-requests==2.33.0.20261006",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/framework"]
+
+# ---------------------------------------------------------------------------------------------
+# pytest. Default selection leaves out the live site, the deliberate failures and quarantined
+# tests; each has its own command (README, "How to run"). A test without a feature marker stops
+# collection (framework.evidence.plugin).
+# ---------------------------------------------------------------------------------------------
+[tool.pytest.ini_options]
+minversion = "9.0"
+testpaths = ["tests"]
+addopts = [
+  "-ra",
+  "--import-mode=importlib",
+  "--strict-markers",
+  "--strict-config",
+  "--alluredir=allure-results",
+  "-m", "not live and not demo_failure and not quarantine",
+]
+markers = [
+  "feature(*ids): requirement IDs this test verifies, FEAT-<AREA>-<NN> (mandatory)",
+  "smoke: the few journeys that must never break; the pull-request gate",
+  "regression: everything that runs nightly",
+  "api: talks HTTP to an API",
+  "ui: drives a browser",
+  "live: dotstrap.com public pages; nightly and on demand only, one worker, never gating",
+  "demo_failure: fails on purpose to show the evidence; never part of a gating run",
+  "quarantine: known-flaky, listed in quarantine.json with an owner and an expiry",
+  "unit: the framework's own tests; no network, no browser",
+]
+filterwarnings = ["error::pytest.PytestUnknownMarkWarning"]
+xfail_strict = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+  "E", "W", "F", "I", "N", "UP", "B", "A", "C4", "S", "BLE", "T20", "PT", "RET", "SIM",
+  "TID", "PTH", "PL", "RUF", "TRY", "DTZ", "ERA", "LOG", "G", "ISC", "PIE", "PERF",
+]
+ignore = [
+  "PLR0913",  # page objects and clients legitimately take several arguments
+  "TRY003",   # messages are written where the error is raised, deliberately
+  "PLR2004",  # status codes in assertions are clearer than named constants
+  "ISC001",   # conflicts with the formatter
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "PLR0913", "S105", "S106"]  # assert is the point of a test; demo creds
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"time.sleep".msg = "Hard wait. Use framework.core.waits.wait_until (a bounded poll) or a Playwright web-first assertion."
+
+[tool.ruff.lint.pylint]
+max-args = 8
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src"]
+plugins = ["pydantic.mypy"]
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = ["allure", "allure.*", "slugify", "pytest_rerunfailures"]
+ignore_missing_imports = true

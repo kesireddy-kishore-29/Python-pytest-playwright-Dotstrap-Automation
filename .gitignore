@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# IDE
+.idea/
+.vscode/
+
+# Run output: evidence is produced per run and uploaded as CI artifacts, never committed.
+# Curated samples live under docs/examples/.
+run-evidence/
+test-results/
+allure-results/
+allure-report/
+.auth/
+# The Allure report generator, downloaded by scripts/allure-report.sh on first use.
+.allure/
+
+# Local overrides and secrets
+.env
+.env.*
+!.env.example
+*.log

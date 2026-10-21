@@ -1,0 +1,35 @@
+# Git hooks. Install once with: pre-commit install --hook-type pre-commit --hook-type commit-msg
+# Every hook runs the tools already pinned in pyproject.toml (language: system), so the hooks and
+# CI use exactly the same versions and nothing is downloaded at commit time.
+repos:
+  - repo: local
+    hooks:
+      - id: file-size
+        name: no file over 2 MB
+        entry: sh scripts/check-file-size.sh
+        language: system
+        stages: [pre-commit]
+      - id: ruff-format
+        name: ruff format
+        entry: ruff format
+        language: system
+        types: [python]
+        stages: [pre-commit]
+      - id: ruff
+        name: ruff lint
+        entry: ruff check --fix --exit-non-zero-on-fix
+        language: system
+        types: [python]
+        stages: [pre-commit]
+      - id: mypy
+        name: mypy (strict, src/)
+        entry: mypy
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [pre-commit]
+      - id: conventional-commit
+        name: Conventional Commits
+        entry: sh scripts/check-commit-msg.sh
+        language: system
+        stages: [commit-msg]
