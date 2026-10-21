@@ -1,0 +1,27 @@
+# Failure evidence
+
+Two bundles from run `py-demo-4` (git `9f48f5466976`, `RECORD_MODE=failures`), each with its own
+README naming every file. Both tests fail on purpose; each was retried once and failed again.
+
+## UI: a renamed test id ([ui-missing-element/](ui-missing-element/))
+
+The test adds a product to the cart, then expects the badge under a test id the page does not have
+(`cart-count`; the real one is `shopping-cart-badge`): what a renamed attribute looks like to a
+test. Allure files it under `LOCATOR_DRIFT` ([categories](../allure/categories.png)).
+
+| File (per attempt) | What it shows |
+|---|---|
+| `video.webm` | The session in real time, 800×450, 7.9 s and 7.5 s |
+| `trace.zip` | Every action, DOM snapshot and request, with cookie and header values masked; checked in `playwright show-trace` ([what the viewer shows](trace-viewer.png)); the same viewer runs at https://trace.playwright.dev |
+| `screenshot.png`, `fullpage.png` | The page at failure: the badge shows 1, so the product really is in the cart; only the locator is wrong |
+| `page-source.html`, `console.log`, `network.har` | The DOM, the console and the requests (headers and cookies masked) |
+| `meta.json` | Test identity, feature ID, attempt, status, environment, git SHA |
+
+## API: an answer that does not match the expectation ([api-wrong-status/](api-wrong-status/))
+
+The test expects a booking that does not exist. Its evidence is `transcript.md` (and the same as
+JSON): the call, the status, the correlation ID, the timing and the body, redacted. Allure files it
+under `PRODUCT_BUG`.
+
+The trace viewer screenshot is of the same test's redacted trace from run `py-demo-3` (git
+`57173bd7406e`: the same redaction; only the transcript's text fence changed after it).

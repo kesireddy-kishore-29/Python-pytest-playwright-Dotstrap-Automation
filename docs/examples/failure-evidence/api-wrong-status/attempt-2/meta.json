@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "repo": "python-pytest-automation-framework",
+  "runId": "py-demo-4",
+  "gitSha": "9f48f5466976",
+  "recordMode": "failures",
+  "test": {
+    "id": "tests/api/test_deliberate_failures.py::test_demo_an_answer_that_does_not_match_the_expectation",
+    "title": "demo: an API answer that does not match the expectation",
+    "suite": "api",
+    "featureIds": [
+      "FEAT-DEMO-01"
+    ],
+    "tags": [
+      "api",
+      "demo_failure"
+    ],
+    "status": "failed",
+    "durationMs": 873,
+    "attempt": 2,
+    "quarantined": false,
+    "startedAt": "2026-10-21T09:07:49.123725+00:00",
+    "error": {
+      "type": "AssertionError",
+      "message": "AssertionError: expected booking 999999999 to exist\nassert 404 == 200\n +  where 404 = <Response [404]>.status_code",
+      "stack": "booker = <framework.api.clients.booker.BookerClient object at 0x000001AC245E0190>\n\n    @pytest.mark.feature(\"FEAT-DEMO-01\")\n    def test_demo_an_answer_that_does_not_match_the_expectation(booker: BookerClient) -> None:\n        \"\"\"demo: an API answer that does not match the expectation.\"\"\"\n        response = booker.get(999_999_999)\n    \n>       assert response.status_code == 200, \"expected booking 999999999 to exist\"\nE       AssertionError: expected booking 999999999 to exist\nE       assert 404 == 200\nE        +  where 404 = <Response [404]>.status_code\n\ntests\\api\\test_deliberate_failures.py:16: AssertionError"
+    }
+  },
+  "environment": {
+    "os": "Windows 11",
+    "python": "3.13.7",
+    "pytest": "9.1.1",
+    "playwright": "1.64.0",
+    "browser": "chromium (headless)"
+  },
+  "notes": []
+}
