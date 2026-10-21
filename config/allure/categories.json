@@ -1,32 +1,49 @@
 [
   {
     "name": "ENVIRONMENT (a service or the network did not answer)",
-    "matchedStatuses": ["failed", "broken"],
+    "matchedStatuses": [
+      "failed",
+      "broken"
+    ],
     "traceRegex": "(?s).*(ConnectionError|ConnectTimeout|ReadTimeout|net::ERR_|is not reachable|Connection refused).*"
   },
   {
     "name": "CONTRACT_DRIFT (a response no longer matches its model)",
-    "matchedStatuses": ["failed", "broken"],
+    "matchedStatuses": [
+      "failed",
+      "broken"
+    ],
     "traceRegex": "(?s).*ContractViolationError.*"
   },
   {
     "name": "LOCATOR_DRIFT (an element the test relies on is not on the page)",
-    "matchedStatuses": ["failed", "broken"],
-    "messageRegex": "(?s).*(element\\(s\\) not found|waiting for get_by_test_id|strict mode violation).*"
+    "matchedStatuses": [
+      "failed",
+      "broken"
+    ],
+    "messageRegex": "(?s).*(element\\(s\\) not found|strict mode violation).*"
   },
   {
     "name": "TIMING (a condition never became true in time)",
-    "matchedStatuses": ["failed", "broken"],
+    "matchedStatuses": [
+      "failed",
+      "broken"
+    ],
     "traceRegex": "(?s).*WaitTimeoutError.*"
   },
   {
     "name": "TEST_DATA (seeding or cleanup failed)",
-    "matchedStatuses": ["failed", "broken"],
+    "matchedStatuses": [
+      "failed",
+      "broken"
+    ],
     "messageRegex": "(?s).*(not cleaned up|not deleted|still signs in|still answers).*"
   },
   {
     "name": "PRODUCT_BUG (the target did not do what the requirement says)",
-    "matchedStatuses": ["failed"],
+    "matchedStatuses": [
+      "failed"
+    ],
     "messageRegex": "(?s)(?!.*(element\\(s\\) not found|not cleaned up|not deleted|still signs in|still answers)).*(assert|Locator expected).*"
   }
 ]

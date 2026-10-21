@@ -73,14 +73,17 @@ class Transcript:
                 "",
             ]
             if call.request_body is not None:
-                lines += ["Request body:", "", "```json", _pretty(call.request_body), "```", ""]
+                lines += ["Request body:", "", *_fenced(call.request_body), ""]
             if call.response_body is not None:
-                lines += ["Response body:", "", "```json", _pretty(call.response_body), "```", ""]
+                lines += ["Response body:", "", *_fenced(call.response_body), ""]
         return "\n".join(lines) + "\n"
 
 
-def _pretty(body: Any) -> str:
-    return json.dumps(body, indent=2) if not isinstance(body, str) else body
+def _fenced(body: Any) -> list[str]:
+    """A body as a Markdown code block: JSON as JSON, anything else as plain text."""
+    if isinstance(body, str):
+        return ["```text", body, "```"]
+    return ["```json", json.dumps(body, indent=2), "```"]
 
 
 def _body(content: bytes | str | None, content_type: str) -> Any:
