@@ -1,4 +1,4 @@
-# python-pytest-automation-framework
+# Python-pytest-playwright-Dotstrap-Automation
 
 API and UI test automation in Python: pytest with fixtures and markers, requests behind a recorded
 session, strict pydantic contracts, Playwright for Python with role-first page objects, a hybrid
@@ -6,10 +6,10 @@ test that seeds through an API and checks the browser, a polite live smoke of a 
 and failure evidence with video, redacted traces and API transcripts. The lite Python member of a
 family of four repositories.
 
-[![CI](https://github.com/kesireddy-kishore-29/python-pytest-automation-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/kesireddy-kishore-29/python-pytest-automation-framework/actions/workflows/ci.yml)
-[![Nightly](https://github.com/kesireddy-kishore-29/python-pytest-automation-framework/actions/workflows/nightly.yml/badge.svg)](https://github.com/kesireddy-kishore-29/python-pytest-automation-framework/actions/workflows/nightly.yml)
-[![dotstrap.com live smoke](https://img.shields.io/endpoint?url=https%3A%2F%2Fkesireddy-kishore-29.github.io%2Fpython-pytest-automation-framework%2Fbadges%2Flive-smoke.json)](https://github.com/kesireddy-kishore-29/python-pytest-automation-framework/actions/workflows/nightly.yml)
-[![Report](https://img.shields.io/badge/report-GitHub%20Pages-2a78d6)](https://kesireddy-kishore-29.github.io/python-pytest-automation-framework/)
+[![CI](https://github.com/kesireddy-kishore-29/Python-pytest-playwright-Dotstrap-Automation/actions/workflows/ci.yml/badge.svg)](https://github.com/kesireddy-kishore-29/Python-pytest-playwright-Dotstrap-Automation/actions/workflows/ci.yml)
+[![Nightly](https://github.com/kesireddy-kishore-29/Python-pytest-playwright-Dotstrap-Automation/actions/workflows/nightly.yml/badge.svg)](https://github.com/kesireddy-kishore-29/Python-pytest-playwright-Dotstrap-Automation/actions/workflows/nightly.yml)
+[![dotstrap.com live smoke](https://img.shields.io/endpoint?url=https%3A%2F%2Fkesireddy-kishore-29.github.io%2FPython-pytest-playwright-Dotstrap-Automation%2Fbadges%2Flive-smoke.json)](https://github.com/kesireddy-kishore-29/Python-pytest-playwright-Dotstrap-Automation/actions/workflows/nightly.yml)
+[![Report](https://img.shields.io/badge/report-GitHub%20Pages-2a78d6)](https://kesireddy-kishore-29.github.io/Python-pytest-playwright-Dotstrap-Automation/)
 
 ![Allure report of a real local run: 52 of 52 passed (unit, API, UI), two-run trend](docs/examples/allure/overview.png)
 
@@ -143,10 +143,10 @@ gating a merge, and no video, trace or HAR. Its evidence is never published or c
 
 ## Family of repos
 
-- [**api-automation-framework**](https://github.com/kesireddy-kishore-29/api-automation-framework): the API flagship in Java with REST Assured and TestNG, whose reference service the API tests here also use.
-- [**ui-automation-framework**](https://github.com/kesireddy-kishore-29/ui-automation-framework): the UI flagship in TypeScript with Playwright, whose self-hosted app the hybrid test here seeds.
-- [**selenium-java-ui-framework**](https://github.com/kesireddy-kishore-29/selenium-java-ui-framework): the same Sauce Demo scenarios in Selenium 4 and Java, with the same feature IDs.
-- **python-pytest-automation-framework** (this one): API and UI tests in Python.
+- [**restassured-testng-api-Dotstrap-Automation**](https://github.com/kesireddy-kishore-29/restassured-testng-api-Dotstrap-Automation): the API flagship in Java with REST Assured and TestNG, whose reference service the API tests here also use.
+- [**playwright-typescript-ui-Dotstrap-Automation**](https://github.com/kesireddy-kishore-29/playwright-typescript-ui-Dotstrap-Automation): the UI flagship in TypeScript with Playwright, whose self-hosted app the hybrid test here seeds.
+- [**selenium-java-testng-ui-Dotstrap-Automation**](https://github.com/kesireddy-kishore-29/selenium-java-testng-ui-Dotstrap-Automation): the same Sauce Demo scenarios in Selenium 4 and Java, with the same feature IDs.
+- **Python-pytest-playwright-Dotstrap-Automation** (this one): API and UI tests in Python.
 
 ## How to run
 
@@ -170,6 +170,6 @@ Switches (environment variables or `.env`): `RECORD_MODE=failures|all|off`, `RUN
 `TEST_RETRIES=0..2`, and every target URL (`BOOKER_BASE_URL`, `REFERENCE_BASE_URL`,
 `APP_BASE_URL`, …). The reference-service tests need the API flagship's service on :7070 and the
 hybrid test the UI flagship's app on :4173; without them they skip. Evidence lands in
-`run-evidence/python-pytest-automation-framework/<run-id>/`. More in the
+`run-evidence/Python-pytest-playwright-Dotstrap-Automation/<run-id>/`. More in the
 [test strategy](docs/test-strategy.md), [locator policy](docs/locator-policy.md) and
 [known issues](docs/known-issues.md).

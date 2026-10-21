@@ -115,7 +115,7 @@ def app_account(settings: Settings, evidence: Attempt) -> Iterator[AppAccount]:
     if not reachable(f"{base}/api/health"):
         pytest.skip(
             f"The UI flagship's app is not reachable at {base} "
-            "(start it with: cd ui-automation-framework && npm run sut)"
+            "(start it with: cd playwright-typescript-ui-Dotstrap-Automation && npm run sut)"
         )
     session = ApiSession("sut-ui", base, settings.timeout, evidence.transcript)
     client = AppClient(session)

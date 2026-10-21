@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      RUN_DIR: run-evidence/python-pytest-automation-framework/nightly-${{ github.run_id }}-${{ github.run_attempt }}
+      RUN_DIR: run-evidence/Python-pytest-playwright-Dotstrap-Automation/nightly-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
@@ -47,7 +47,7 @@ jobs:
         if: vars.FLAGSHIP_OWNER != '' && vars.API_FLAGSHIP_REF != ''
         uses: actions/checkout@v7
         with:
-          repository: ${{ vars.FLAGSHIP_OWNER }}/api-automation-framework
+          repository: ${{ vars.FLAGSHIP_OWNER }}/restassured-testng-api-Dotstrap-Automation
           ref: ${{ vars.API_FLAGSHIP_REF }}
           path: flagship-api
       - uses: actions/setup-java@v6
@@ -73,7 +73,7 @@ jobs:
         if: vars.FLAGSHIP_OWNER != '' && vars.UI_FLAGSHIP_REF != ''
         uses: actions/checkout@v7
         with:
-          repository: ${{ vars.FLAGSHIP_OWNER }}/ui-automation-framework
+          repository: ${{ vars.FLAGSHIP_OWNER }}/playwright-typescript-ui-Dotstrap-Automation
           ref: ${{ vars.UI_FLAGSHIP_REF }}
           path: flagship-ui
       - uses: actions/setup-node@v7
@@ -171,7 +171,7 @@ jobs:
     permissions:
       contents: write
     env:
-      RUN_DIR: run-evidence/python-pytest-automation-framework/nightly-${{ github.run_id }}-${{ github.run_attempt }}
+      RUN_DIR: run-evidence/Python-pytest-playwright-Dotstrap-Automation/nightly-${{ github.run_id }}-${{ github.run_attempt }}
       LIVE_OUTCOME: ${{ needs.live.outputs.outcome }}
     steps:
       - uses: actions/checkout@v7
@@ -219,9 +219,9 @@ jobs:
           cat > site/index.html <<EOF
           <!doctype html><html lang="en"><meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>python-pytest-automation-framework reports</title>
+          <title>Python-pytest-playwright-Dotstrap-Automation reports</title>
           <body style="font-family:system-ui,sans-serif;margin:2rem;line-height:1.6">
-          <h1>python-pytest-automation-framework</h1>
+          <h1>Python-pytest-playwright-Dotstrap-Automation</h1>
           <p>Nightly run <code>${RUN_ID}</code></p>
           <ul><li><a href="allure/">Allure report (with trend)</a></li>
           <li><a href="runs/latest/gallery.html">Run gallery (screenshots; videos and traces are in the workflow artifacts)</a></li>

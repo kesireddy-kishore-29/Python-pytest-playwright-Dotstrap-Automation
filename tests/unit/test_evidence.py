@@ -63,7 +63,7 @@ def test_writes_the_summary_and_the_flaky_report_in_the_shared_format(tmp_path: 
     }
     written = json.loads((tmp_path / "run-summary.json").read_text("utf-8"))
     assert written["schemaVersion"] == 1
-    assert written["repo"] == "python-pytest-automation-framework"
+    assert written["repo"] == "Python-pytest-playwright-Dotstrap-Automation"
     assert {"id", "title", "suite", "featureIds", "status", "attempt"} <= written["tests"][0].keys()
     flaky = json.loads((tmp_path / "flaky-report.json").read_text("utf-8"))
     assert flaky["flaky"] == [

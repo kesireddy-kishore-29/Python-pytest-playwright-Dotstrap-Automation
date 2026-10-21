@@ -43,7 +43,7 @@ jobs:
     env:
       RECORD_MODE: failures
       RUN_ID: ci-${{ github.run_id }}-${{ github.run_attempt }}
-      RUN_DIR: run-evidence/python-pytest-automation-framework/ci-${{ github.run_id }}-${{ github.run_attempt }}
+      RUN_DIR: run-evidence/Python-pytest-playwright-Dotstrap-Automation/ci-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6

@@ -7,7 +7,7 @@ from playwright.sync_api import Page, Request, Response
 
 from framework.evidence.browser import ConsoleWatch
 
-USER_AGENT_SUFFIX = " python-pytest-automation-framework (portfolio smoke test)"
+USER_AGENT_SUFFIX = " Python-pytest-playwright-Dotstrap-Automation (portfolio smoke test)"
 
 
 @dataclass

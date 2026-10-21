@@ -63,7 +63,8 @@ def reference_available(settings: Settings) -> None:
     if not reachable(f"{url(settings.reference_base_url)}/health"):
         pytest.skip(
             f"The API flagship's reference service is not reachable at "
-            f"{url(settings.reference_base_url)} (start it from api-automation-framework)"
+            f"{url(settings.reference_base_url)} "
+            "(start it from restassured-testng-api-Dotstrap-Automation)"
         )
 
 

@@ -3,7 +3,7 @@ requires = ["hatchling==1.32.4"]
 build-backend = "hatchling.build"
 
 [project]
-name = "python-pytest-automation-framework"
+name = "Python-pytest-playwright-Dotstrap-Automation"
 version = "1.0.0"
 description = "API and UI test automation with pytest, requests, pydantic and Playwright for Python."
 readme = "README.md"

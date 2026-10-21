@@ -2,4 +2,4 @@
 `<EVIDENCE_ROOT>/<repo>/<run-id>/<suite>/<test-slug>/<attempt>/`, `run-summary.json`,
 `flaky-report.json`, failure bundles, the shared gallery page and a step summary."""
 
-REPO = "python-pytest-automation-framework"
+REPO = "Python-pytest-playwright-Dotstrap-Automation"

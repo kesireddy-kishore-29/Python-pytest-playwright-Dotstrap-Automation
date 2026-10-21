@@ -129,7 +129,7 @@ def write_gallery(run: RunRecorder, finals: list[AttemptRecord]) -> Path:
             }
         )
     data = {
-        "repo": "python-pytest-automation-framework",
+        "repo": "Python-pytest-playwright-Dotstrap-Automation",
         "runId": run.run_id,
         "recordMode": run.record_mode,
         "base": "",
@@ -143,7 +143,7 @@ def write_gallery(run: RunRecorder, finals: list[AttemptRecord]) -> Path:
 def step_summary(run: RunRecorder, summary: dict[str, Any], finals: list[AttemptRecord]) -> str:
     t = summary["totals"]
     lines = [
-        f"## python-pytest-automation-framework · `{run.run_id}`",
+        f"## Python-pytest-playwright-Dotstrap-Automation · `{run.run_id}`",
         "",
         "| Total | Passed | Failed | Flaky | Skipped | Quarantined | Duration |",
         "|---|---|---|---|---|---|---|",
@@ -161,7 +161,7 @@ def step_summary(run: RunRecorder, summary: dict[str, Any], finals: list[Attempt
             lines.append(f"- `{f.id}`: {message[:160]}")
         lines += ["", "</details>", ""]
     lines.append(
-        f"Evidence: `run-evidence/python-pytest-automation-framework/{run.run_id}/` "
+        f"Evidence: `run-evidence/Python-pytest-playwright-Dotstrap-Automation/{run.run_id}/` "
         "(gallery.html, failure-bundles/)"
     )
     return "\n".join(lines) + "\n"
