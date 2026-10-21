@@ -68,6 +68,20 @@ def test_free_text_secrets_are_masked() -> None:
     assert "secret_sauce" not in out
 
 
+def test_home_folders_lose_the_user_name_but_urls_keep_their_paths() -> None:
+    backslash = chr(0x5C)
+    windows = (
+        f"C:{backslash}Users{backslash}someone{backslash}AppData{backslash}Local{backslash}Temp"
+    )
+    escaped = windows.replace(backslash, backslash * 2)
+
+    assert redact_text(windows) == windows.replace("someone", "<user>")
+    assert redact_text(escaped) == escaped.replace("someone", "<user>")
+    assert redact_text("/home/someone/work") == "/home/<user>/work"
+    assert redact_text('"/Users/someone/x"') == '"/Users/<user>/x"'
+    assert redact_text("http://localhost:4173/api/users/me") == "http://localhost:4173/api/users/me"
+
+
 def test_ordinary_text_is_left_alone() -> None:
     text = "6 products sorted by price; a token of thanks"
 

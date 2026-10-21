@@ -35,6 +35,11 @@ _HEADER_LINE = re.compile(
 )
 _BEARER = re.compile(r"\b(bearer)\s+[A-Za-z0-9._~+/=-]{8,}", re.I)
 _PASSWORD_INPUT = re.compile(r"(<input[^>]*type=\"password\"[^>]*value=\")[^\"]*(\")", re.I)
+# A home folder names the person who ran the tests (Playwright traces record temp paths):
+# C:\Users\<name> (also with JSON's doubled backslashes), /home/<name>, /Users/<name>.
+_WINDOWS_HOME = re.compile(r"([A-Za-z]:(\\{1,2})Users\2)([^\\/\"'\s<>]+)", re.I)
+_UNIX_HOME = re.compile(r"((?<![\w/.])/(?:home|Users)/)([^/\"'\s<>]+)")
+USER = "<user>"
 
 
 def redact_header(name: str, value: str) -> str:
@@ -56,6 +61,8 @@ def redact_text(text: str) -> str:
     out = _SECRET_QUERY.sub(rf"\g<1>{MASK}", text)
     out = _SECRET_JSON_TEXT.sub(rf"\g<1>{MASK}\g<2>", out)
     out = _PASSWORD_INPUT.sub(rf"\g<1>{MASK}\g<2>", out)
+    out = _WINDOWS_HOME.sub(rf"\g<1>{USER}", out)
+    out = _UNIX_HOME.sub(rf"\g<1>{USER}", out)
     out = _HEADER_LINE.sub(
         lambda m: f"{m.group(1)}{m.group(2)} {MASK}" if m.group(2) else f"{m.group(1)}{MASK}",
         out,
