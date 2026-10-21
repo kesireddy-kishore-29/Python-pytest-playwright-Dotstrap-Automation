@@ -22,10 +22,18 @@ from framework.evidence.plugin import Attempt, phase_failed
 from framework.ui.pages.sauce import LoginPage
 
 # Sauce Demo answers 404 to a direct load of its pages (a single-page-app fallback) while still
-# rendering them, and Chrome logs it. That exact message, and nothing else, is allowed.
+# rendering them, and Chrome logs it. That exact message is allowed.
 SAUCE_DEEP_LINK_404 = re.compile(
     r"status of 404 \(\) \(https://www\.saucedemo\.com/[a-z-]+\.html(\?[^)]*)?\)$"
 )
+# Sauce Demo's error-reporting SDK posts to events.backtrace.io with a placeholder project
+# (universe=UNIVERSE) and that service sometimes answers 401: third-party telemetry, not the page
+# under test. Only those two submit endpoints are allowed.
+SAUCE_TELEMETRY_401 = re.compile(
+    r"status of 401 \(Unauthorized\) "
+    r"\(https://events\.backtrace\.io/api/(summed|unique)-events/submit\?"
+)
+SAUCE_ALLOWED = [SAUCE_DEEP_LINK_404, SAUCE_TELEMETRY_401]
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -94,7 +102,7 @@ def sauce_page(
 ) -> Iterator[Page]:
     """A page already signed in to Sauce Demo (the saved session; no form)."""
     context = new_context(base_url=url(settings.sauce_base_url), storage_state=sauce_session)
-    yield from _open_page(context, request, settings, evidence, [SAUCE_DEEP_LINK_404])
+    yield from _open_page(context, request, settings, evidence, SAUCE_ALLOWED)
 
 
 @pytest.fixture
@@ -103,7 +111,7 @@ def signed_out_page(
 ) -> Iterator[Page]:
     """A Sauce Demo page with no session, for the sign-in tests."""
     context = new_context(base_url=url(settings.sauce_base_url))
-    yield from _open_page(context, request, settings, evidence, [SAUCE_DEEP_LINK_404])
+    yield from _open_page(context, request, settings, evidence, SAUCE_ALLOWED)
 
 
 # ---- the UI flagship's app (self-hosted, port 4173) --------------------------------------------

@@ -39,6 +39,10 @@ Sauce Demo:
 - Loading a page directly answers **HTTP 404** while still rendering it; Chrome logs the 404 as a
   console error, and the console guard allows exactly that message.
 - The menu entries are `<a>` elements **without `href`**, so they have no link role.
+- Its error-reporting SDK posts to `events.backtrace.io` with a placeholder project and that
+  service sometimes answers **401** (a console error). Third-party telemetry, not the page
+  under test: the console guard allows exactly those two submit endpoints (found in the UI
+  flagship on 2026-10-21).
 
 ## Defects found in this framework while building it (all fixed)
 
