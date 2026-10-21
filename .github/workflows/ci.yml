@@ -1,0 +1,85 @@
+name: CI
+
+# Pull-request gate: lint, format, types and the framework's unit tests, then the smoke tests
+# (Restful-Booker and Sauce Demo; the tests that need a flagship's service skip without it). The
+# live site and the deliberate failures never run here.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Ruff, format, mypy (strict), unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - run: ruff format --check .
+      - run: ruff check .
+      - run: mypy
+      - name: Unit tests (also the traceability and quarantine gates, at collection)
+        run: pytest -m unit
+
+  smoke:
+    name: Smoke tests (API and UI)
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      RECORD_MODE: failures
+      RUN_ID: ci-${{ github.run_id }}-${{ github.run_attempt }}
+      RUN_DIR: run-evidence/python-pytest-automation-framework/ci-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Cache Playwright browsers
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-py-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+      - run: playwright install --with-deps chromium
+      - name: Smoke
+        id: tests
+        run: pytest -m smoke -n 2
+      - name: Allure report
+        if: always() && steps.tests.outcome != 'skipped'
+        run: scripts/allure-report.sh
+      - name: Upload the failure bundles
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: failure-bundles-${{ github.run_attempt }}
+          path: ${{ env.RUN_DIR }}/failure-bundles/
+          retention-days: 30
+          if-no-files-found: ignore
+      - name: Upload evidence and reports
+        # run-evidence holds redacted traces only; test-results/ (pytest-playwright's own folder)
+        # is never uploaded.
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: smoke-${{ github.run_attempt }}
+          path: |
+            run-evidence/
+            allure-report/
+          retention-days: 14
+          if-no-files-found: ignore

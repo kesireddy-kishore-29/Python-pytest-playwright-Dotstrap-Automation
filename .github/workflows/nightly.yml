@@ -1,0 +1,242 @@
+name: Nightly
+
+# Every API and UI test with retries (flaky tests are reported, not hidden) and every test
+# recorded; the flagships' services when their refs are set; the live production smoke (public
+# pages, one worker, never gating); the Allure report with its trend and the run gallery on Pages.
+
+on:
+  schedule:
+    - cron: '29 3 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: nightly
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  RUN_ID: nightly-${{ github.run_id }}-${{ github.run_attempt }}
+  RECORD_MODE: all
+  TEST_RETRIES: '2'
+
+jobs:
+  regression:
+    name: API and UI (retries, every test recorded)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      RUN_DIR: run-evidence/python-pytest-automation-framework/nightly-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Cache Playwright browsers
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-py-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+      - run: playwright install --with-deps chromium
+      # The reference-service tests (idempotency, 401/404/422/429) need the API flagship's
+      # service: set FLAGSHIP_OWNER and API_FLAGSHIP_REF to run them; without them they skip.
+      - name: Check out the API flagship
+        if: vars.FLAGSHIP_OWNER != '' && vars.API_FLAGSHIP_REF != ''
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ vars.FLAGSHIP_OWNER }}/api-automation-framework
+          ref: ${{ vars.API_FLAGSHIP_REF }}
+          path: flagship-api
+      - uses: actions/setup-java@v6
+        if: vars.FLAGSHIP_OWNER != '' && vars.API_FLAGSHIP_REF != ''
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - name: Start the reference service on :7070
+        if: vars.FLAGSHIP_OWNER != '' && vars.API_FLAGSHIP_REF != ''
+        working-directory: flagship-api
+        run: |
+          ./mvnw -B -ntp -DskipTests package -pl sut -am
+          nohup java -jar sut/target/reference-service.jar > ../reference-service.log 2>&1 &
+          for _ in $(seq 1 30); do
+            curl -sf http://localhost:7070/health && exit 0
+            sleep 1
+          done
+          cat ../reference-service.log
+          exit 1
+      # The hybrid test seeds the UI flagship's app: set FLAGSHIP_OWNER and UI_FLAGSHIP_REF.
+      - name: Check out the UI flagship
+        if: vars.FLAGSHIP_OWNER != '' && vars.UI_FLAGSHIP_REF != ''
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ vars.FLAGSHIP_OWNER }}/ui-automation-framework
+          ref: ${{ vars.UI_FLAGSHIP_REF }}
+          path: flagship-ui
+      - uses: actions/setup-node@v7
+        if: vars.FLAGSHIP_OWNER != '' && vars.UI_FLAGSHIP_REF != ''
+        with:
+          node-version: 24
+      - name: Start the UI flagship's app on :4173
+        if: vars.FLAGSHIP_OWNER != '' && vars.UI_FLAGSHIP_REF != ''
+        working-directory: flagship-ui
+        run: |
+          npm ci
+          nohup npx tsx sut-ui/server.ts > ../sut-ui.log 2>&1 &
+          for _ in $(seq 1 30); do
+            curl -sf http://localhost:4173/api/health && exit 0
+            sleep 1
+          done
+          cat ../sut-ui.log
+          exit 1
+      - name: API and UI tests
+        id: tests
+        run: pytest -m "not live and not demo_failure and not quarantine and not unit" -n 4
+      - name: Quarantined tests (run, never gate)
+        if: always() && steps.tests.outcome != 'skipped'
+        continue-on-error: true
+        run: |
+          if [ "$(jq '.entries | length' quarantine.json)" -eq 0 ]; then
+            echo "Nothing is quarantined."
+            exit 0
+          fi
+          RUN_ID="${RUN_ID}-quarantine" pytest -m quarantine
+      - name: Upload the evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: evidence
+          path: run-evidence/
+          retention-days: 14
+          if-no-files-found: ignore
+      - name: Upload the failure bundles
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: failure-bundles
+          path: ${{ env.RUN_DIR }}/failure-bundles/
+          retention-days: 30
+          if-no-files-found: ignore
+      - name: Upload the Allure results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: allure-results
+          path: allure-results/
+          retention-days: 14
+          if-no-files-found: ignore
+
+  live:
+    name: Live production smoke (public pages only; never gates)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # A failure here is reported (job output and badge), never blocking: the site is production,
+    # not a test target. Its evidence has no video, trace or HAR, and is never published.
+    outputs:
+      outcome: ${{ steps.live.outcome }}
+    env:
+      RUN_ID: live-${{ github.run_id }}-${{ github.run_attempt }}
+      RECORD_MODE: failures
+      TEST_RETRIES: '0'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - run: playwright install --with-deps chromium
+      - name: Live smoke (one worker, a user agent naming this project, no retries)
+        id: live
+        continue-on-error: true
+        run: pytest -m live
+      - name: Upload the live evidence (short-lived artifact; never published to Pages)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: live-evidence
+          path: run-evidence/
+          retention-days: 7
+          if-no-files-found: ignore
+
+  publish:
+    name: Allure with history, run gallery and live badge to Pages
+    needs: [regression, live]
+    if: always() && needs.regression.result != 'cancelled'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    env:
+      RUN_DIR: run-evidence/python-pytest-automation-framework/nightly-${{ github.run_id }}-${{ github.run_attempt }}
+      LIVE_OUTCOME: ${{ needs.live.outputs.outcome }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check out the published site (absent before the first publish)
+        uses: actions/checkout@v7
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: published
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: actions/download-artifact@v8
+        with:
+          name: allure-results
+          path: allure-results
+      - uses: actions/download-artifact@v8
+        with:
+          name: evidence
+          path: run-evidence
+      - name: Allure report with trend history
+        run: |
+          scripts/allure-report.sh published/allure
+          mkdir -p site
+          cp -r allure-report site/allure
+      - name: This run's gallery, without videos, traces, HAR files and bundles
+        # They stay in the workflow artifacts; the published gallery shows each screenshot.
+        run: |
+          mkdir -p site/runs/latest
+          rsync -a --exclude video.webm --exclude trace.zip --exclude network.har \
+            --exclude failure-bundles "$RUN_DIR/" site/runs/latest/
+      - name: Live smoke badge (from this run's live job)
+        run: |
+          mkdir -p site/badges
+          case "$LIVE_OUTCOME" in
+            success) message=passing; color=brightgreen ;;
+            failure) message=failing; color=red ;;
+            *) message="not run"; color=lightgrey ;;
+          esac
+          printf '{"schemaVersion":1,"label":"dotstrap.com live smoke","message":"%s","color":"%s"}\n' \
+            "$message" "$color" > site/badges/live-smoke.json
+      - name: Site index
+        run: |
+          cat > site/index.html <<EOF
+          <!doctype html><html lang="en"><meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>python-pytest-automation-framework reports</title>
+          <body style="font-family:system-ui,sans-serif;margin:2rem;line-height:1.6">
+          <h1>python-pytest-automation-framework</h1>
+          <p>Nightly run <code>${RUN_ID}</code></p>
+          <ul><li><a href="allure/">Allure report (with trend)</a></li>
+          <li><a href="runs/latest/gallery.html">Run gallery (screenshots; videos and traces are in the workflow artifacts)</a></li>
+          <li><a href="runs/latest/run-summary.json">run-summary.json</a></li></ul>
+          </body></html>
+          EOF
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          force_orphan: true
+          commit_message: 'nightly ${{ env.RUN_ID }}'
+      - name: Fail when the regression failed
+        if: needs.regression.result == 'failure'
+        run: |
+          echo "The regression failed; see the Allure report and the failure bundles."
+          exit 1

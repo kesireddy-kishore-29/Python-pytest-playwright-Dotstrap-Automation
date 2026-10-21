@@ -10,7 +10,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 version=2.39.0
 sha1=8ea1f552028768fefab49e1c33403cafffbf2ce8
-results=allure-results
+results="allure-results"
 previous="${1:-}"
 if [ ! -d "$results" ]; then
   echo "allure-report: no results at $results (run a suite first)" >&2
