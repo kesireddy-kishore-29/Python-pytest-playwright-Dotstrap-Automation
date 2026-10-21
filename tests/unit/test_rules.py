@@ -23,7 +23,7 @@ CART = "tests/ui/test_shop.py::test_cart"
 def entry(**overrides: Any) -> quarantine.Entry:
     values: dict[str, Any] = {
         "test_id": CART,
-        "owner": "kishore",
+        "owner": "@qa-team",
         "reason": "badge lags",
         "expires": "2026-11-01",
         "issue": "#12",

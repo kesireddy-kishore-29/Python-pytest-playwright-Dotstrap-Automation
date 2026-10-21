@@ -9,7 +9,6 @@ description = "API and UI test automation with pytest, requests, pydantic and Pl
 readme = "README.md"
 requires-python = ">=3.12"
 license = "MIT"
-authors = [{ name = "Kesireddy Kishore" }]
 # Exact pins: a test framework must be reproducible. Upgrade deliberately, all at once.
 dependencies = [
   "pytest==9.1.1",
