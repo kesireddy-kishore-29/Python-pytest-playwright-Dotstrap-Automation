@@ -18,9 +18,9 @@ accessibility, triage, healing).
 
 | Command | Contents | Runs |
 |---|---|---|
-| `pytest -m unit` | 30 framework tests, no outside network, no browser | Every push (CI `quality`) |
+| `pytest -m unit` | 36 framework tests, no outside network, no browser | Every push (CI `quality`) |
 | `pytest -m smoke -n 2` | 5: a token, a booking read back, an idempotent purchase, sign-in, a full checkout | Every push and pull request |
-| `pytest -n 4` | Unit, API and UI: 52 tests (live, deliberate failures and quarantine are left out by default) | Locally |
+| `pytest -n 4` | Unit, API and UI: 58 tests (live, deliberate failures and quarantine are left out by default) | Locally |
 | nightly | API and UI with retries, every test recorded | Nightly |
 | `pytest -m live` | 4 checks, 15 runs, one worker | Nightly and on demand, never gating |
 | `pytest -m demo_failure` | 3 tests that fail on purpose (1 API, 2 UI) | On demand |
