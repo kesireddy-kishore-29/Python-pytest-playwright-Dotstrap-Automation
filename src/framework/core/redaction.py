@@ -1,13 +1,18 @@
 """Masks secrets before evidence is written: credential headers, cookies, token and password
-fields, token query parameters and bearer tokens. Used on transcripts, console logs, page
-sources, HAR files and Playwright traces (which Playwright writes with raw cookies). The rules
-are the same as the UI flagship's `redact.ts`. Unit tests: tests/unit/test_redaction.py.
+fields, token query parameters, bearer tokens and the machine's own folders in paths. Used on
+transcripts, console logs, page sources, HAR files and Playwright traces (which Playwright writes
+with raw cookies). The rules are the same as the UI flagship's `redact.ts`. Unit tests:
+tests/unit/test_redaction.py.
 """
 
+import hashlib
 import io
 import json
 import re
+import sys
+import tempfile
 import zipfile
+from pathlib import Path
 from typing import Any
 
 MASK = "****"
@@ -41,6 +46,45 @@ _WINDOWS_HOME = re.compile(r"([A-Za-z]:(\\{1,2})Users\2)([^\\/\"'\s<>]+)", re.I)
 _UNIX_HOME = re.compile(r"((?<![\w/.])/(?:home|Users)/)([^/\"'\s<>]+)")
 USER = "<user>"
 
+# The folders of the machine that ran the tests, most specific first: the repository (paths
+# under it become relative), the temp folder and the home folder. Stack traces and Playwright's
+# traces carry them. Each is (path, replacement); "" makes the paths under it relative.
+REPO_ROOT = Path(__file__).resolve().parents[3]
+LOCAL_ROOTS = [(str(REPO_ROOT), ""), (tempfile.gettempdir(), "<tmp>"), (str(Path.home()), "~")]
+# One separator as text or JSON text writes it: /, \ or \\.
+_SEP = r"(?:\\{1,2}|/)"
+
+
+def _root_pattern(path: str, ignore_case: bool) -> re.Pattern[str] | None:
+    parts = [part for part in re.split(r"[\\/]+", path) if part]
+    if len(parts) < 2:  # never "/" or "C:\" alone
+        return None
+    lead = _SEP if re.match(r"[\\/]", path) else ""
+    body = f"{_SEP}+".join(re.escape(part) for part in parts)
+    return re.compile(rf"{lead}{body}(?![\w.-])({_SEP})?", re.I if ignore_case else 0)
+
+
+def redact_local_paths(
+    text: str,
+    roots: list[tuple[str, str]] | None = None,
+    ignore_case: bool = sys.platform == "win32",
+) -> str:
+    """Replaces each local root in `text` (paths under the repository become relative)."""
+    out = text
+    for path, replacement in LOCAL_ROOTS if roots is None else roots:
+        pattern = _root_pattern(path, ignore_case)
+        if pattern is None:
+            continue
+
+        def replace(match: re.Match[str], replacement: str = replacement) -> str:
+            sep = match.group(1) or ""
+            if replacement:
+                return replacement + sep
+            return "" if sep else "."
+
+        out = pattern.sub(replace, out)
+    return out
+
 
 def redact_header(name: str, value: str) -> str:
     """A header value with secrets masked; the scheme of an Authorization header is kept."""
@@ -58,7 +102,7 @@ def redact_headers(headers: dict[str, str]) -> dict[str, str]:
 
 
 def redact_text(text: str) -> str:
-    out = _SECRET_QUERY.sub(rf"\g<1>{MASK}", text)
+    out = _SECRET_QUERY.sub(rf"\g<1>{MASK}", redact_local_paths(text))
     out = _SECRET_JSON_TEXT.sub(rf"\g<1>{MASK}\g<2>", out)
     out = _PASSWORD_INPUT.sub(rf"\g<1>{MASK}\g<2>", out)
     out = _WINDOWS_HOME.sub(rf"\g<1>{USER}", out)
@@ -124,6 +168,54 @@ def _is_binary(data: bytes) -> bool:
     return b"\x00" in data[:4096]
 
 
+def _sha1(text: str) -> str:
+    return hashlib.sha1(text.encode("utf-8"), usedforsecurity=False).hexdigest()
+
+
+def _trace_strings(source: zipfile.ZipFile) -> set[str]:
+    """Every string anywhere in the JSON lines of a trace's event and stack logs."""
+    found: set[str] = set()
+
+    def walk(value: Any) -> None:
+        if isinstance(value, str):
+            found.add(value)
+        elif isinstance(value, list):
+            for item in value:
+                walk(item)
+        elif isinstance(value, dict):
+            for item in value.values():
+                walk(item)
+
+    for name in source.namelist():
+        if re.search(r"\.(trace|stacks)$", name):
+            for line in source.read(name).decode("utf-8").split("\n"):
+                try:
+                    walk(json.loads(line))
+                except json.JSONDecodeError:
+                    continue
+    return found
+
+
+def _renamed_sources(source: zipfile.ZipFile) -> dict[str, str]:
+    """The trace viewer finds a test's source file at `src/<sha1 of its path>.<ext>`. Paths are
+    redacted, so each source is renamed to the hash of its redacted path; the viewer's Source tab
+    keeps working."""
+    sources = {}
+    for name in source.namelist():
+        match = re.fullmatch(r"src/([0-9a-f]{40})(\.[^/]*)?", name)
+        if match:
+            sources[match.group(1)] = (name, match.group(2) or "")
+    renames: dict[str, str] = {}
+    if not sources:
+        return renames
+    for path in _trace_strings(source):
+        found = sources.get(_sha1(path))
+        clean = redact_local_paths(path)
+        if found and clean != path:
+            renames[found[0]] = f"src/{_sha1(clean)}{found[1]}"
+    return renames
+
+
 def redact_trace(data: bytes) -> bytes:
     """A Playwright trace zip with the same masking as a HAR. Event and network logs (JSON
     lines) are walked value by value; other text resources are redacted as text; images and
@@ -133,8 +225,10 @@ def redact_trace(data: bytes) -> bytes:
         zipfile.ZipFile(io.BytesIO(data)) as source,
         zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as target,
     ):
+        renames = _renamed_sources(source)
         for info in source.infolist():
             content = source.read(info.filename)
+            name = renames.get(info.filename, info.filename)
             if re.search(r"\.(trace|network|stacks)$", info.filename):
                 lines = []
                 for line in content.decode("utf-8").split("\n"):
@@ -145,5 +239,5 @@ def redact_trace(data: bytes) -> bytes:
                 content = "\n".join(lines).encode("utf-8")
             elif not _is_binary(content):
                 content = redact_text(content.decode("utf-8", errors="replace")).encode("utf-8")
-            target.writestr(info.filename, content)
+            target.writestr(name, content)
     return out.getvalue()

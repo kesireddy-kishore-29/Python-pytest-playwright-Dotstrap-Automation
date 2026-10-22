@@ -1,21 +1,100 @@
 """Redaction: every text, JSON, HAR and trace written as evidence goes through these rules."""
 
+import hashlib
 import io
 import json
 import zipfile
+from pathlib import Path
 
 import pytest
 
 from framework.core.redaction import (
     MASK,
+    REPO_ROOT,
     redact_har,
     redact_header,
     redact_json,
+    redact_local_paths,
     redact_text,
     redact_trace,
 )
 
 pytestmark = pytest.mark.unit
+
+B = chr(0x5C)  # one backslash
+WINDOWS_ROOTS = [
+    (f"D:{B}work{B}repo", ""),
+    (f"C:{B}Users{B}someone{B}AppData{B}Local{B}Temp", "<tmp>"),
+    (f"C:{B}Users{B}someone", "~"),
+]
+
+
+def sha1(text: str) -> str:
+    return hashlib.sha1(text.encode("utf-8"), usedforsecurity=False).hexdigest()
+
+
+def test_paths_under_the_repository_become_relative_in_text_and_json_text() -> None:
+    lines = [
+        f"at open (D:{B}work{B}repo{B}src{B}pages{B}sauce.py:20)",
+        f'{{"file":"D:{B * 2}work{B * 2}repo{B * 2}tests{B * 2}test_a.py"}}',
+        "file:///D:/work/repo/src/a.py",
+        f"cwd d:{B}work{B}repo",
+    ]
+
+    out = redact_local_paths("\n".join(lines), WINDOWS_ROOTS, ignore_case=True).split("\n")
+
+    assert out == [
+        f"at open (src{B}pages{B}sauce.py:20)",
+        f'{{"file":"tests{B * 2}test_a.py"}}',
+        "file:///src/a.py",
+        "cwd .",
+    ]
+
+
+def test_the_temp_and_home_folders_are_replaced_so_no_user_name_is_left() -> None:
+    text = (
+        f'{{"dir":"C:{B * 2}Users{B * 2}someone{B * 2}AppData{B * 2}Local{B * 2}Temp{B * 2}pw-1"}}'
+        f" C:{B}Users{B}someone{B}.cache"
+    )
+
+    out = redact_local_paths(text, WINDOWS_ROOTS, ignore_case=True)
+
+    assert out == f'{{"dir":"<tmp>{B * 2}pw-1"}} ~{B}.cache'
+
+
+def test_a_sibling_folder_that_only_starts_with_the_same_name_is_left_alone() -> None:
+    text = f"D:{B}work{B}repo-other{B}x.py"
+
+    assert redact_local_paths(text, WINDOWS_ROOTS, ignore_case=True) == text
+
+
+def test_posix_paths_as_on_the_ci_runner() -> None:
+    roots = [("/home/runner/work/r/r", ""), ("/home/runner", "~")]
+    text = "/home/runner/work/r/r/tests/test_a.py /home/runner/.cache/x"
+
+    assert redact_local_paths(text, roots, ignore_case=False) == "tests/test_a.py ~/.cache/x"
+
+
+def test_this_machine_is_redacted_by_default() -> None:
+    assert redact_text(str(REPO_ROOT / "src" / "x.py")) == str(Path("src") / "x.py")
+    assert redact_text(str(Path.home() / "notes.txt")) == str(Path("~") / "notes.txt")
+
+
+def test_trace_sources_are_renamed_to_the_hash_of_their_relative_path() -> None:
+    file = str(REPO_ROOT / "tests" / "test_a.py")
+    relative = str(Path("tests") / "test_a.py")
+    source = io.BytesIO()
+    with zipfile.ZipFile(source, "w") as archive:
+        archive.writestr("trace.trace", json.dumps({"stack": [{"file": file, "line": 3}]}))
+        archive.writestr("trace.stacks", json.dumps({"files": [file], "stacks": []}))
+        archive.writestr(f"src/{sha1(file)}.py", "def test_a(): ...")
+
+    redacted = zipfile.ZipFile(io.BytesIO(redact_trace(source.getvalue())))
+
+    assert f"src/{sha1(relative)}.py" in redacted.namelist()
+    assert f"src/{sha1(file)}.py" not in redacted.namelist()
+    assert json.loads(redacted.read("trace.stacks")) == {"files": [relative], "stacks": []}
+    assert json.dumps(str(REPO_ROOT))[1:-1] not in redacted.read("trace.trace").decode()
 
 
 def test_credential_headers_are_masked_and_the_scheme_kept() -> None:
