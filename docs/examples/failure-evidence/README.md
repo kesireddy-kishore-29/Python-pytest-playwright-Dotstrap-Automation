@@ -1,6 +1,6 @@
 # Failure evidence
 
-Two bundles from run `py-demo-7` (git `098481d9ff14`, `RECORD_MODE=failures`), each with its own
+Two bundles from run `py-demo-8` (git `883cb6d92005`, `RECORD_MODE=failures`), each with its own
 README naming every file. Both tests fail on purpose; each was retried once and failed again.
 
 ## UI: a renamed test id ([ui-missing-element/](ui-missing-element/))
@@ -11,7 +11,7 @@ test. Allure files it under `LOCATOR_DRIFT` ([categories](../allure/categories.p
 
 | File (per attempt) | What it shows |
 |---|---|
-| `video.webm` | The session in real time, 800×450, 7.3 s and 7.5 s |
+| `video.webm` | The session in real time, 800×450, 7.6 s and 7.1 s |
 | `trace.zip` | Every action, DOM snapshot and request, with cookie and header values masked; checked in `playwright show-trace` ([what the viewer shows](trace-viewer.png)); the same viewer runs at https://trace.playwright.dev |
 | `screenshot.png`, `fullpage.png` | The page at failure: the badge shows 1, so the product really is in the cart; only the locator is wrong |
 | `page-source.html`, `console.log`, `network.har` | The DOM, the console and the requests (headers and cookies masked) |

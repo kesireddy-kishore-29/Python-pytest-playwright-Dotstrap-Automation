@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "repo": "Python-pytest-playwright-Dotstrap-Automation",
-  "runId": "py-demo-7",
-  "gitSha": "098481d9ff14",
+  "runId": "py-demo-8",
+  "gitSha": "883cb6d92005",
   "recordMode": "failures",
   "test": {
     "id": "tests/api/test_deliberate_failures.py::test_demo_an_answer_that_does_not_match_the_expectation",
@@ -16,14 +16,14 @@
       "demo_failure"
     ],
     "status": "retried",
-    "durationMs": 1004,
+    "durationMs": 938,
     "attempt": 1,
     "quarantined": false,
-    "startedAt": "2026-10-22T03:41:47.012150+00:00",
+    "startedAt": "2026-10-22T04:03:34.040542+00:00",
     "error": {
       "type": "AssertionError",
       "message": "AssertionError: expected booking 999999999 to exist\nassert 404 == 200\n +  where 404 = <Response [404]>.status_code",
-      "stack": "booker = <framework.api.clients.booker.BookerClient object at 0x000001BB258A67B0>\n\n    @pytest.mark.feature(\"FEAT-DEMO-01\")\n    def test_demo_an_answer_that_does_not_match_the_expectation(booker: BookerClient) -> None:\n        \"\"\"demo: an API answer that does not match the expectation.\"\"\"\n        response = booker.get(999_999_999)\n    \n>       assert response.status_code == 200, \"expected booking 999999999 to exist\"\nE       AssertionError: expected booking 999999999 to exist\nE       assert 404 == 200\nE        +  where 404 = <Response [404]>.status_code\n\ntests\\api\\test_deliberate_failures.py:16: AssertionError"
+      "stack": "booker = <framework.api.clients.booker.BookerClient object at 0x0000024A72EE67B0>\n\n    @pytest.mark.feature(\"FEAT-DEMO-01\")\n    def test_demo_an_answer_that_does_not_match_the_expectation(booker: BookerClient) -> None:\n        \"\"\"demo: an API answer that does not match the expectation.\"\"\"\n        response = booker.get(999_999_999)\n    \n>       assert response.status_code == 200, \"expected booking 999999999 to exist\"\nE       AssertionError: expected booking 999999999 to exist\nE       assert 404 == 200\nE        +  where 404 = <Response [404]>.status_code\n\ntests\\api\\test_deliberate_failures.py:16: AssertionError"
     }
   },
   "environment": {

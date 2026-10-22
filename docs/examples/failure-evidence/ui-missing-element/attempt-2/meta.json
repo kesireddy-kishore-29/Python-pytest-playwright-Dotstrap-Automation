@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "repo": "Python-pytest-playwright-Dotstrap-Automation",
-  "runId": "py-demo-7",
-  "gitSha": "098481d9ff14",
+  "runId": "py-demo-8",
+  "gitSha": "883cb6d92005",
   "recordMode": "failures",
   "test": {
     "id": "tests/ui/test_deliberate_failures.py::test_demo_a_renamed_test_id_is_a_missing_element[chromium]",
@@ -16,10 +16,10 @@
       "demo_failure"
     ],
     "status": "failed",
-    "durationMs": 6335,
+    "durationMs": 6549,
     "attempt": 2,
     "quarantined": false,
-    "startedAt": "2026-10-22T03:41:59.801457+00:00",
+    "startedAt": "2026-10-22T04:03:44.571138+00:00",
     "error": {
       "type": "AssertionError",
       "message": "AssertionError: Locator expected to have text '1'\nActual value: None\nError: element(s) not found \nCall log:\n  - Expect \"to_have_text\" get_by_test_id(\"cart-count\") with timeout 5000ms\n  - waiting for get_by_test_id(\"cart-count\")\n\nAria snapshot:\n- banner:\n  - button \"Open Menu\"\n  - img \"Open Menu\"\n  - text: Swag Labs\n  - button \"Cart, 1 items\": \"1\"\n  - text: Products Name (A to Z)\n  - combobox \"Sort products\":\n    - option \"Name (A to Z)\" [selected]\n    - option \"Name (Z to A)\"\n    - option \"Price (low to high)\"\n    - option \"Price (high to low)\"\n- main:\n  - button \"View details for Sauce Labs Backpack\":\n    - img \"Sauce Labs Backpack\"\n  - button \"View details for Sauce Labs Backpack\": Sauce Labs Backpack\n  - text: carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection. $29.99\n  - button \"Remove\"\n  - button \"View details for Sauce Labs Bike Light\":\n    - img \"Sauce Labs Bike Light\"\n  - button \"View details for Sauce Labs Bike Light\": Sauce Labs Bike Light\n  - text: A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included. $9.99\n  - button \"Add to cart\"\n  - button \"View details for Sauce Labs Bolt T-Shirt\":\n    - img \"Sauce Labs Bolt T-Shirt\"\n  - button \"View details for Sauce Labs Bolt T-Shirt\": Sauce Labs Bolt T-Shirt\n  - text: Get your testing superhero on with the Sauce Labs bolt T-shirt. From American Apparel, 100% ringspun combed cotton, heather gray with red bolt. $15.99\n  - button \"Add to cart\"\n  - button \"View details for Sauce Labs Fleece Jacket\":\n    - img \"Sauce Labs Fleece Jacket\"\n  - button \"View details for Sauce Labs Fleece Jacket\": Sauce Labs Fleece Jacket\n  - text: It's not every day that you come across a midweight quarter-zip fleece jacket capable of handling everything from a relaxing day outdoors to a busy day at the office. $49.99\n  - button \"Add to cart\"\n  - button \"View details for Sauce Labs Onesie\":\n    - img \"Sauce Labs Onesie\"\n  - button \"View details for Sauce Labs Onesie\": Sauce Labs Onesie\n  - text: Rib snap infant onesie for the junior automation engineer in development. Reinforced 3-snap bottom closure, two-needle hemmed sleeved and bottom won't unravel. $7.99\n  - button \"Add to cart\"\n  - button \"View details for Test.allTheThings() T-Shirt (Red)\":\n    - img \"Test.allTheThings() T-Shirt (Red)\"\n  - button \"View details for Test.allTheThings() T-Shirt (Red)\": Test.allTheThings() T-Shirt (Red)\n  - text: This classic Sauce Labs t-shirt is perfect to wear when cozying up to your keyboard to automate a few tests. Super-soft and comfy ringspun combed cotton. $15.99\n  - button \"Add to cart\"\n- contentinfo:\n  - list:\n    - listitem:\n      - link \"X\":\n        - /url: https://x.com/saucelabs\n    - listitem:\n      - link \"Facebook\":\n        - /url: https://www.facebook.com/saucelabs\n    - listitem:\n      - link \"LinkedIn\":\n        - /url: https://www.linkedin.com/company/sauce-labs/\n  - text: \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy",

@@ -4,7 +4,7 @@
 |---|---|
 | Test | `tests/api/test_deliberate_failures.py::test_demo_an_answer_that_does_not_match_the_expectation` |
 | Features | FEAT-DEMO-01 |
-| Run | `py-demo-7` (git `098481d9ff14`) |
+| Run | `py-demo-8` (git `883cb6d92005`) |
 | Attempts | 2 |
 | Error | `AssertionError` |
 
