@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "repo": "Python-pytest-playwright-Dotstrap-Automation",
+  "runId": "nightly-41190393926-1",
+  "gitSha": "c116de3b52f8",
+  "recordMode": "all",
+  "test": {
+    "id": "tests/api/test_booker.py::test_a_created_booking_reads_back_exactly_as_sent",
+    "title": "A created booking reads back exactly as sent",
+    "suite": "api",
+    "featureIds": [
+      "FEAT-BOOK-01",
+      "FEAT-BOOK-02"
+    ],
+    "tags": [
+      "smoke",
+      "regression",
+      "api"
+    ],
+    "status": "passed",
+    "durationMs": 650,
+    "attempt": 1,
+    "quarantined": false,
+    "startedAt": "2026-10-31T09:52:07.936573+00:00"
+  },
+  "environment": {
+    "os": "Linux 7.0.0-1017-azure",
+    "python": "3.12.15",
+    "pytest": "9.1.1",
+    "playwright": "1.64.0",
+    "browser": "chromium (headless)"
+  },
+  "notes": []
+}

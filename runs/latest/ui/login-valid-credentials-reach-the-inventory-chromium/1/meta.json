@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "repo": "Python-pytest-playwright-Dotstrap-Automation",
+  "runId": "nightly-41190393926-1",
+  "gitSha": "c116de3b52f8",
+  "recordMode": "all",
+  "test": {
+    "id": "tests/ui/test_login.py::test_valid_credentials_reach_the_inventory[chromium]",
+    "title": "Valid credentials reach the inventory [chromium]",
+    "suite": "ui",
+    "featureIds": [
+      "FEAT-LOGIN-01"
+    ],
+    "tags": [
+      "smoke",
+      "regression",
+      "ui"
+    ],
+    "status": "passed",
+    "durationMs": 2118,
+    "attempt": 1,
+    "quarantined": false,
+    "startedAt": "2026-10-31T09:52:08.839620+00:00"
+  },
+  "environment": {
+    "os": "Linux 7.0.0-1017-azure",
+    "python": "3.12.15",
+    "pytest": "9.1.1",
+    "playwright": "1.64.0",
+    "browser": "chromium (headless)"
+  },
+  "notes": []
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "repo": "Python-pytest-playwright-Dotstrap-Automation",
+  "runId": "nightly-41190393926-1",
+  "gitSha": "c116de3b52f8",
+  "recordMode": "all",
+  "test": {
+    "id": "tests/ui/test_items_hybrid.py::test_items_seeded_through_the_api_are_listed_and_one_deleted_in_the_ui_leaves_the_api[chromium]",
+    "title": "Items seeded through the API are listed; one deleted in the UI is gone from the API [chromium]",
+    "suite": "ui",
+    "featureIds": [
+      "FEAT-ITEMS-01"
+    ],
+    "tags": [
+      "regression",
+      "ui"
+    ],
+    "status": "skipped",
+    "durationMs": 344,
+    "attempt": 1,
+    "quarantined": false,
+    "startedAt": "2026-10-31T09:52:08.840616+00:00"
+  },
+  "environment": {
+    "os": "Linux 7.0.0-1017-azure",
+    "python": "3.12.15",
+    "pytest": "9.1.1",
+    "playwright": "1.64.0",
+    "browser": "chromium (headless)"
+  },
+  "notes": []
+}

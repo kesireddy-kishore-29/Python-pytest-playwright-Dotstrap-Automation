@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "repo": "Python-pytest-playwright-Dotstrap-Automation",
+  "runId": "nightly-41190393926-1",
+  "gitSha": "c116de3b52f8",
+  "recordMode": "all",
+  "test": {
+    "id": "tests/ui/test_shop.py::test_the_badge_follows_adding_and_removing_items[chromium]",
+    "title": "Adding and removing items keeps the badge count right [chromium]",
+    "suite": "ui",
+    "featureIds": [
+      "FEAT-CART-01"
+    ],
+    "tags": [
+      "regression",
+      "ui"
+    ],
+    "status": "passed",
+    "durationMs": 1928,
+    "attempt": 1,
+    "quarantined": false,
+    "startedAt": "2026-10-31T09:52:10.857149+00:00"
+  },
+  "environment": {
+    "os": "Linux 7.0.0-1017-azure",
+    "python": "3.12.15",
+    "pytest": "9.1.1",
+    "playwright": "1.64.0",
+    "browser": "chromium (headless)"
+  },
+  "notes": []
+}

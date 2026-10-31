@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "repo": "Python-pytest-playwright-Dotstrap-Automation",
+  "runId": "nightly-41190393926-1",
+  "gitSha": "c116de3b52f8",
+  "recordMode": "all",
+  "test": {
+    "id": "tests/api/test_booker.py::test_valid_credentials_receive_a_token",
+    "title": "Valid credentials receive a token",
+    "suite": "api",
+    "featureIds": [
+      "FEAT-AUTH-01"
+    ],
+    "tags": [
+      "smoke",
+      "regression",
+      "api"
+    ],
+    "status": "passed",
+    "durationMs": 237,
+    "attempt": 1,
+    "quarantined": false,
+    "startedAt": "2026-10-31T09:52:07.709302+00:00"
+  },
+  "environment": {
+    "os": "Linux 7.0.0-1017-azure",
+    "python": "3.12.15",
+    "pytest": "9.1.1",
+    "playwright": "1.64.0",
+    "browser": "chromium (headless)"
+  },
+  "notes": []
+}

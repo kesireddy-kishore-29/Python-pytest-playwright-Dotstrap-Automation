@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "repo": "Python-pytest-playwright-Dotstrap-Automation",
+  "runId": "nightly-41190393926-1",
+  "gitSha": "c116de3b52f8",
+  "recordMode": "all",
+  "test": {
+    "id": "tests/api/test_reference_service.py::test_the_same_key_and_body_replays_the_purchase_and_charges_once",
+    "title": "The same idempotency key and body replays the purchase and charges once",
+    "suite": "api",
+    "featureIds": [
+      "FEAT-IDEMP-01"
+    ],
+    "tags": [
+      "smoke",
+      "regression",
+      "api"
+    ],
+    "status": "skipped",
+    "durationMs": 0,
+    "attempt": 1,
+    "quarantined": false,
+    "startedAt": "2026-10-31T09:52:08.354057+00:00"
+  },
+  "environment": {
+    "os": "Linux 7.0.0-1017-azure",
+    "python": "3.12.15",
+    "pytest": "9.1.1",
+    "playwright": "1.64.0",
+    "browser": "chromium (headless)"
+  },
+  "notes": []
+}
