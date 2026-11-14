@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "repo": "Python-pytest-playwright-Dotstrap-Automation",
+  "runId": "nightly-43586714759-1",
+  "gitSha": "c116de3b52f8",
+  "recordMode": "all",
+  "test": {
+    "id": "tests/ui/test_shop.py::test_a_full_checkout_completes_with_a_confirmation[chromium]",
+    "title": "A full checkout completes with a confirmation [chromium]",
+    "suite": "ui",
+    "featureIds": [
+      "FEAT-CHECKOUT-01"
+    ],
+    "tags": [
+      "smoke",
+      "regression",
+      "ui"
+    ],
+    "status": "passed",
+    "durationMs": 1522,
+    "attempt": 1,
+    "quarantined": false,
+    "startedAt": "2026-11-14T10:45:14.771005+00:00"
+  },
+  "environment": {
+    "os": "Linux 7.0.0-1019-azure",
+    "python": "3.12.16",
+    "pytest": "9.1.1",
+    "playwright": "1.64.0",
+    "browser": "chromium (headless)"
+  },
+  "notes": []
+}

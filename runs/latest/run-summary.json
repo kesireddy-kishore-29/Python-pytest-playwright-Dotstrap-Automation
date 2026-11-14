@@ -1,0 +1,641 @@
+{
+  "schemaVersion": 1,
+  "repo": "Python-pytest-playwright-Dotstrap-Automation",
+  "runId": "nightly-43586714759-1",
+  "gitSha": "c116de3b52f8",
+  "recordMode": "all",
+  "startedAt": "2026-11-14T10:45:08.661146+00:00",
+  "finishedAt": "2026-11-14T10:45:16.779080+00:00",
+  "durationMs": 8117,
+  "environment": {
+    "os": "Linux 7.0.0-1019-azure",
+    "python": "3.12.16",
+    "pytest": "9.1.1",
+    "playwright": "1.64.0",
+    "browser": "chromium (headless)"
+  },
+  "totals": {
+    "total": 22,
+    "passed": 16,
+    "failed": 0,
+    "skipped": 6,
+    "flaky": 0,
+    "quarantined": 0
+  },
+  "tests": [
+    {
+      "id": "tests/api/test_booker.py::test_a_created_booking_reads_back_exactly_as_sent",
+      "title": "A created booking reads back exactly as sent",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-BOOK-01",
+        "FEAT-BOOK-02"
+      ],
+      "tags": [
+        "smoke",
+        "regression",
+        "api"
+      ],
+      "status": "passed",
+      "durationMs": 136,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:09.816407+00:00",
+      "evidence": {
+        "dir": "api/booker-a-created-booking-reads-back-exactly-as-sent/1",
+        "files": [
+          "meta.json",
+          "transcript.json",
+          "transcript.md"
+        ]
+      }
+    },
+    {
+      "id": "tests/api/test_booker.py::test_a_deleted_booking_is_gone",
+      "title": "A deleted booking is gone",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-BOOK-04"
+      ],
+      "tags": [
+        "regression",
+        "api"
+      ],
+      "status": "passed",
+      "durationMs": 130,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:09.817362+00:00",
+      "evidence": {
+        "dir": "api/booker-a-deleted-booking-is-gone/1",
+        "files": [
+          "meta.json",
+          "transcript.json",
+          "transcript.md"
+        ]
+      }
+    },
+    {
+      "id": "tests/api/test_booker.py::test_a_write_without_a_valid_token_is_refused[bad token]",
+      "title": "A write without a valid token is refused and changes nothing [bad token]",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-AUTH-02"
+      ],
+      "tags": [
+        "regression",
+        "api"
+      ],
+      "status": "passed",
+      "durationMs": 72,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:09.966142+00:00",
+      "evidence": {
+        "dir": "api/booker-a-write-without-a-valid-token-is-refused-bad-token/1",
+        "files": [
+          "meta.json",
+          "transcript.json",
+          "transcript.md"
+        ]
+      }
+    },
+    {
+      "id": "tests/api/test_booker.py::test_a_write_without_a_valid_token_is_refused[no token]",
+      "title": "A write without a valid token is refused and changes nothing [no token]",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-AUTH-02"
+      ],
+      "tags": [
+        "regression",
+        "api"
+      ],
+      "status": "passed",
+      "durationMs": 144,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:09.817371+00:00",
+      "evidence": {
+        "dir": "api/booker-a-write-without-a-valid-token-is-refused-no-token/1",
+        "files": [
+          "meta.json",
+          "transcript.json",
+          "transcript.md"
+        ]
+      }
+    },
+    {
+      "id": "tests/api/test_booker.py::test_an_unknown_booking_is_a_404",
+      "title": "An unknown booking is a 404",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-NEG-01"
+      ],
+      "tags": [
+        "regression",
+        "api"
+      ],
+      "status": "passed",
+      "durationMs": 69,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:09.952855+00:00",
+      "evidence": {
+        "dir": "api/booker-an-unknown-booking-is-a-404/1",
+        "files": [
+          "meta.json",
+          "transcript.json",
+          "transcript.md"
+        ]
+      }
+    },
+    {
+      "id": "tests/api/test_booker.py::test_an_update_with_a_token_replaces_the_booking",
+      "title": "An update with a token replaces the booking",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-BOOK-03"
+      ],
+      "tags": [
+        "regression",
+        "api"
+      ],
+      "status": "passed",
+      "durationMs": 88,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:09.958758+00:00",
+      "evidence": {
+        "dir": "api/booker-an-update-with-a-token-replaces-the-booking/1",
+        "files": [
+          "meta.json",
+          "transcript.json",
+          "transcript.md"
+        ]
+      }
+    },
+    {
+      "id": "tests/api/test_booker.py::test_valid_credentials_receive_a_token",
+      "title": "Valid credentials receive a token",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-AUTH-01"
+      ],
+      "tags": [
+        "smoke",
+        "regression",
+        "api"
+      ],
+      "status": "passed",
+      "durationMs": 82,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:09.816540+00:00",
+      "evidence": {
+        "dir": "api/booker-valid-credentials-receive-a-token/1",
+        "files": [
+          "meta.json",
+          "transcript.json",
+          "transcript.md"
+        ]
+      }
+    },
+    {
+      "id": "tests/api/test_booker.py::test_wrong_credentials_receive_no_token",
+      "title": "Wrong credentials receive no token",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-AUTH-02"
+      ],
+      "tags": [
+        "regression",
+        "api"
+      ],
+      "status": "passed",
+      "durationMs": 26,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:09.904526+00:00",
+      "evidence": {
+        "dir": "api/booker-wrong-credentials-receive-no-token/1",
+        "files": [
+          "meta.json",
+          "transcript.json",
+          "transcript.md"
+        ]
+      }
+    },
+    {
+      "id": "tests/api/test_reference_service.py::test_a_refusal_is_a_problem_with_the_right_status[401]",
+      "title": "A refusal is an RFC 7807 problem with the right status [401]",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-AUTHZ-01"
+      ],
+      "tags": [
+        "regression",
+        "api"
+      ],
+      "status": "skipped",
+      "durationMs": 2,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:09.944947+00:00",
+      "error": {
+        "type": "Skipped",
+        "message": "Skipped: The API flagship's reference service is not reachable at http://localhost:7070 (start it from restassured-testng-api-Dotstrap-Automation)",
+        "stack": ""
+      },
+      "evidence": {
+        "dir": "api/reference-service-a-refusal-is-a-problem-with-the-right-status-401/1",
+        "files": [
+          "meta.json"
+        ]
+      }
+    },
+    {
+      "id": "tests/api/test_reference_service.py::test_a_refusal_is_a_problem_with_the_right_status[404]",
+      "title": "A refusal is an RFC 7807 problem with the right status [404]",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-ERR-01"
+      ],
+      "tags": [
+        "regression",
+        "api"
+      ],
+      "status": "skipped",
+      "durationMs": 0,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:09.985664+00:00",
+      "error": {
+        "type": "Skipped",
+        "message": "Skipped: The API flagship's reference service is not reachable at http://localhost:7070 (start it from restassured-testng-api-Dotstrap-Automation)",
+        "stack": ""
+      },
+      "evidence": {
+        "dir": "api/reference-service-a-refusal-is-a-problem-with-the-right-status-404/1",
+        "files": [
+          "meta.json"
+        ]
+      }
+    },
+    {
+      "id": "tests/api/test_reference_service.py::test_a_refusal_is_a_problem_with_the_right_status[422]",
+      "title": "A refusal is an RFC 7807 problem with the right status [422]",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-ACCT-02"
+      ],
+      "tags": [
+        "regression",
+        "api"
+      ],
+      "status": "skipped",
+      "durationMs": 0,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:10.026638+00:00",
+      "error": {
+        "type": "Skipped",
+        "message": "Skipped: The API flagship's reference service is not reachable at http://localhost:7070 (start it from restassured-testng-api-Dotstrap-Automation)",
+        "stack": ""
+      },
+      "evidence": {
+        "dir": "api/reference-service-a-refusal-is-a-problem-with-the-right-status-422/1",
+        "files": [
+          "meta.json"
+        ]
+      }
+    },
+    {
+      "id": "tests/api/test_reference_service.py::test_a_refusal_is_a_problem_with_the_right_status[429]",
+      "title": "A refusal is an RFC 7807 problem with the right status [429]",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-RATE-01"
+      ],
+      "tags": [
+        "regression",
+        "api"
+      ],
+      "status": "skipped",
+      "durationMs": 2,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:10.026176+00:00",
+      "error": {
+        "type": "Skipped",
+        "message": "Skipped: The API flagship's reference service is not reachable at http://localhost:7070 (start it from restassured-testng-api-Dotstrap-Automation)",
+        "stack": ""
+      },
+      "evidence": {
+        "dir": "api/reference-service-a-refusal-is-a-problem-with-the-right-status-429/1",
+        "files": [
+          "meta.json"
+        ]
+      }
+    },
+    {
+      "id": "tests/api/test_reference_service.py::test_the_same_key_and_body_replays_the_purchase_and_charges_once",
+      "title": "The same idempotency key and body replays the purchase and charges once",
+      "suite": "api",
+      "featureIds": [
+        "FEAT-IDEMP-01"
+      ],
+      "tags": [
+        "smoke",
+        "regression",
+        "api"
+      ],
+      "status": "skipped",
+      "durationMs": 2,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:10.052773+00:00",
+      "error": {
+        "type": "Skipped",
+        "message": "Skipped: The API flagship's reference service is not reachable at http://localhost:7070 (start it from restassured-testng-api-Dotstrap-Automation)",
+        "stack": ""
+      },
+      "evidence": {
+        "dir": "api/reference-service-the-same-key-and-body-replays-the-purchase-and-charges-once/1",
+        "files": [
+          "meta.json"
+        ]
+      }
+    },
+    {
+      "id": "tests/ui/test_items_hybrid.py::test_items_seeded_through_the_api_are_listed_and_one_deleted_in_the_ui_leaves_the_api[chromium]",
+      "title": "Items seeded through the API are listed; one deleted in the UI is gone from the API [chromium]",
+      "suite": "ui",
+      "featureIds": [
+        "FEAT-ITEMS-01"
+      ],
+      "tags": [
+        "regression",
+        "ui"
+      ],
+      "status": "skipped",
+      "durationMs": 1002,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:10.043007+00:00",
+      "error": {
+        "type": "Skipped",
+        "message": "Skipped: The UI flagship's app is not reachable at http://localhost:4173 (start it with: cd playwright-typescript-ui-Dotstrap-Automation && npm run sut)",
+        "stack": ""
+      },
+      "evidence": {
+        "dir": "ui/items-hybrid-items-seeded-through-the-api-are-listed-and-one-deleted-in-the-ui-leaves-the/1",
+        "files": [
+          "meta.json"
+        ]
+      }
+    },
+    {
+      "id": "tests/ui/test_login.py::test_a_locked_out_user_is_refused[chromium]",
+      "title": "A locked-out user is refused with the lock-out message [chromium]",
+      "suite": "ui",
+      "featureIds": [
+        "FEAT-LOGIN-03"
+      ],
+      "tags": [
+        "regression",
+        "ui"
+      ],
+      "status": "passed",
+      "durationMs": 1709,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:11.091819+00:00",
+      "evidence": {
+        "dir": "ui/login-a-locked-out-user-is-refused-chromium/1",
+        "files": [
+          "console.log",
+          "fullpage.png",
+          "meta.json",
+          "network.har",
+          "page-source.html",
+          "screenshot.png",
+          "trace.zip",
+          "video.webm"
+        ]
+      }
+    },
+    {
+      "id": "tests/ui/test_login.py::test_invalid_credentials_are_refused_with_a_specific_message[chromium-empty username]",
+      "title": "Invalid credentials are refused with a specific message [chromium-empty username]",
+      "suite": "ui",
+      "featureIds": [
+        "FEAT-LOGIN-02"
+      ],
+      "tags": [
+        "regression",
+        "ui"
+      ],
+      "status": "passed",
+      "durationMs": 1386,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:13.386966+00:00",
+      "evidence": {
+        "dir": "ui/login-invalid-credentials-are-refused-with-a-specific-message-chromium-empty-username/1",
+        "files": [
+          "console.log",
+          "fullpage.png",
+          "meta.json",
+          "network.har",
+          "page-source.html",
+          "screenshot.png",
+          "trace.zip",
+          "video.webm"
+        ]
+      }
+    },
+    {
+      "id": "tests/ui/test_login.py::test_invalid_credentials_are_refused_with_a_specific_message[chromium-unknown user]",
+      "title": "Invalid credentials are refused with a specific message [chromium-unknown user]",
+      "suite": "ui",
+      "featureIds": [
+        "FEAT-LOGIN-02"
+      ],
+      "tags": [
+        "regression",
+        "ui"
+      ],
+      "status": "passed",
+      "durationMs": 1334,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:14.030218+00:00",
+      "evidence": {
+        "dir": "ui/login-invalid-credentials-are-refused-with-a-specific-message-chromium-unknown-user/1",
+        "files": [
+          "console.log",
+          "fullpage.png",
+          "meta.json",
+          "network.har",
+          "page-source.html",
+          "screenshot.png",
+          "trace.zip",
+          "video.webm"
+        ]
+      }
+    },
+    {
+      "id": "tests/ui/test_login.py::test_invalid_credentials_are_refused_with_a_specific_message[chromium-wrong password]",
+      "title": "Invalid credentials are refused with a specific message [chromium-wrong password]",
+      "suite": "ui",
+      "featureIds": [
+        "FEAT-LOGIN-02"
+      ],
+      "tags": [
+        "regression",
+        "ui"
+      ],
+      "status": "passed",
+      "durationMs": 2860,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:10.067257+00:00",
+      "evidence": {
+        "dir": "ui/login-invalid-credentials-are-refused-with-a-specific-message-chromium-wrong-password/1",
+        "files": [
+          "console.log",
+          "fullpage.png",
+          "meta.json",
+          "network.har",
+          "page-source.html",
+          "screenshot.png",
+          "trace.zip",
+          "video.webm"
+        ]
+      }
+    },
+    {
+      "id": "tests/ui/test_login.py::test_valid_credentials_reach_the_inventory[chromium]",
+      "title": "Valid credentials reach the inventory [chromium]",
+      "suite": "ui",
+      "featureIds": [
+        "FEAT-LOGIN-01"
+      ],
+      "tags": [
+        "smoke",
+        "regression",
+        "ui"
+      ],
+      "status": "passed",
+      "durationMs": 3480,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:10.069059+00:00",
+      "evidence": {
+        "dir": "ui/login-valid-credentials-reach-the-inventory-chromium/1",
+        "files": [
+          "console.log",
+          "fullpage.png",
+          "meta.json",
+          "network.har",
+          "page-source.html",
+          "screenshot.png",
+          "trace.zip",
+          "video.webm"
+        ]
+      }
+    },
+    {
+      "id": "tests/ui/test_shop.py::test_a_full_checkout_completes_with_a_confirmation[chromium]",
+      "title": "A full checkout completes with a confirmation [chromium]",
+      "suite": "ui",
+      "featureIds": [
+        "FEAT-CHECKOUT-01"
+      ],
+      "tags": [
+        "smoke",
+        "regression",
+        "ui"
+      ],
+      "status": "passed",
+      "durationMs": 1522,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:14.768702+00:00",
+      "evidence": {
+        "dir": "ui/shop-a-full-checkout-completes-with-a-confirmation-chromium/1",
+        "files": [
+          "console.log",
+          "fullpage.png",
+          "meta.json",
+          "network.har",
+          "page-source.html",
+          "screenshot.png",
+          "trace.zip",
+          "video.webm"
+        ]
+      }
+    },
+    {
+      "id": "tests/ui/test_shop.py::test_the_badge_follows_adding_and_removing_items[chromium]",
+      "title": "Adding and removing items keeps the badge count right [chromium]",
+      "suite": "ui",
+      "featureIds": [
+        "FEAT-CART-01"
+      ],
+      "tags": [
+        "regression",
+        "ui"
+      ],
+      "status": "passed",
+      "durationMs": 4044,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:10.093605+00:00",
+      "evidence": {
+        "dir": "ui/shop-the-badge-follows-adding-and-removing-items-chromium/1",
+        "files": [
+          "console.log",
+          "fullpage.png",
+          "meta.json",
+          "network.har",
+          "page-source.html",
+          "screenshot.png",
+          "trace.zip",
+          "video.webm"
+        ]
+      }
+    },
+    {
+      "id": "tests/ui/test_shop.py::test_the_order_summary_adds_up[chromium]",
+      "title": "The order summary adds up: item total + tax = total [chromium]",
+      "suite": "ui",
+      "featureIds": [
+        "FEAT-CHECKOUT-03"
+      ],
+      "tags": [
+        "regression",
+        "ui"
+      ],
+      "status": "passed",
+      "durationMs": 2623,
+      "attempt": 1,
+      "quarantined": false,
+      "startedAt": "2026-11-14T10:45:13.208566+00:00",
+      "evidence": {
+        "dir": "ui/shop-the-order-summary-adds-up-chromium/1",
+        "files": [
+          "console.log",
+          "fullpage.png",
+          "meta.json",
+          "network.har",
+          "page-source.html",
+          "screenshot.png",
+          "trace.zip",
+          "video.webm"
+        ]
+      }
+    }
+  ]
+}

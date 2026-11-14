@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "repo": "Python-pytest-playwright-Dotstrap-Automation",
+  "runId": "nightly-43586714759-1",
+  "gitSha": "c116de3b52f8",
+  "recordMode": "all",
+  "test": {
+    "id": "tests/ui/test_login.py::test_invalid_credentials_are_refused_with_a_specific_message[chromium-unknown user]",
+    "title": "Invalid credentials are refused with a specific message [chromium-unknown user]",
+    "suite": "ui",
+    "featureIds": [
+      "FEAT-LOGIN-02"
+    ],
+    "tags": [
+      "regression",
+      "ui"
+    ],
+    "status": "passed",
+    "durationMs": 1334,
+    "attempt": 1,
+    "quarantined": false,
+    "startedAt": "2026-11-14T10:45:14.033581+00:00"
+  },
+  "environment": {
+    "os": "Linux 7.0.0-1019-azure",
+    "python": "3.12.16",
+    "pytest": "9.1.1",
+    "playwright": "1.64.0",
+    "browser": "chromium (headless)"
+  },
+  "notes": []
+}
