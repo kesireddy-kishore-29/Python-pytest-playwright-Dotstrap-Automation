@@ -1,0 +1,150 @@
+[
+  {
+    "target": "restful-booker",
+    "method": "POST",
+    "url": "https://restful-booker.herokuapp.com/booking",
+    "request_headers": {
+      "User-Agent": "python-requests/2.34.2",
+      "Accept-Encoding": "gzip, deflate",
+      "Accept": "application/json",
+      "Connection": "keep-alive",
+      "X-Correlation-ID": "cd108701-baab-4e8a-8525-8c9b8bf8f328"
+    },
+    "request_body": {
+      "firstname": "qa-guest-7cd6a19a",
+      "lastname": "Lovelace",
+      "totalprice": 240,
+      "depositpaid": true,
+      "bookingdates": {
+        "checkin": "2026-12-05",
+        "checkout": "2026-12-08"
+      },
+      "additionalneeds": "Breakfast"
+    },
+    "status": 200,
+    "response_headers": {
+      "Content-Length": "213",
+      "Content-Type": "application/json; charset=utf-8",
+      "Date": "Sat, 21 Nov 2026 11:32:13 GMT",
+      "Etag": "W/\"d5-z75VDrLvhS5EI+tQeYlUY61AUHw\"",
+      "Nel": "[policy not stored]",
+      "Report-To": "[policy not stored]",
+      "Reporting-Endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=NadmX4HTwLMucaBExhY4MrBbyWGrYlKPxujLM6DWM5Y%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1795260733\"",
+      "Server": "Heroku",
+      "Via": "1.1 heroku-router",
+      "X-Powered-By": "Express"
+    },
+    "response_body": {
+      "bookingid": 650,
+      "booking": {
+        "firstname": "qa-guest-7cd6a19a",
+        "lastname": "Lovelace",
+        "totalprice": 240,
+        "depositpaid": true,
+        "bookingdates": {
+          "checkin": "2026-12-05",
+          "checkout": "2026-12-08"
+        },
+        "additionalneeds": "Breakfast"
+      }
+    },
+    "duration_ms": 29.2,
+    "correlation_id": "cd108701-baab-4e8a-8525-8c9b8bf8f328",
+    "started_at": "2026-11-21T11:32:13.069733+00:00",
+    "error": null
+  },
+  {
+    "target": "restful-booker",
+    "method": "DELETE",
+    "url": "https://restful-booker.herokuapp.com/booking/650",
+    "request_headers": {
+      "User-Agent": "python-requests/2.34.2",
+      "Accept-Encoding": "gzip, deflate",
+      "Accept": "application/json",
+      "Connection": "keep-alive",
+      "X-Correlation-ID": "cebc7a1b-9a12-406a-92a6-c0b947586ab0",
+      "Cookie": "****"
+    },
+    "request_body": null,
+    "status": 201,
+    "response_headers": {
+      "Content-Length": "7",
+      "Content-Type": "text/plain; charset=utf-8",
+      "Date": "Sat, 21 Nov 2026 11:32:13 GMT",
+      "Etag": "W/\"7-rM9AyJuqT6iOan/xHh+AW+7K/T8\"",
+      "Nel": "[policy not stored]",
+      "Report-To": "[policy not stored]",
+      "Reporting-Endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=NadmX4HTwLMucaBExhY4MrBbyWGrYlKPxujLM6DWM5Y%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1795260733\"",
+      "Server": "Heroku",
+      "Via": "1.1 heroku-router",
+      "X-Powered-By": "Express"
+    },
+    "response_body": "Created",
+    "duration_ms": 4.7,
+    "correlation_id": "cebc7a1b-9a12-406a-92a6-c0b947586ab0",
+    "started_at": "2026-11-21T11:32:13.099475+00:00",
+    "error": null
+  },
+  {
+    "target": "restful-booker",
+    "method": "GET",
+    "url": "https://restful-booker.herokuapp.com/booking/650",
+    "request_headers": {
+      "User-Agent": "python-requests/2.34.2",
+      "Accept-Encoding": "gzip, deflate",
+      "Accept": "application/json",
+      "Connection": "keep-alive",
+      "X-Correlation-ID": "04a0199a-6d1f-4f88-a40e-bfa74024f4bd"
+    },
+    "request_body": null,
+    "status": 404,
+    "response_headers": {
+      "Content-Length": "9",
+      "Content-Type": "text/plain; charset=utf-8",
+      "Date": "Sat, 21 Nov 2026 11:32:13 GMT",
+      "Etag": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\"",
+      "Nel": "[policy not stored]",
+      "Report-To": "[policy not stored]",
+      "Reporting-Endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=NadmX4HTwLMucaBExhY4MrBbyWGrYlKPxujLM6DWM5Y%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1795260733\"",
+      "Server": "Heroku",
+      "Via": "1.1 heroku-router",
+      "X-Powered-By": "Express"
+    },
+    "response_body": "Not Found",
+    "duration_ms": 4.7,
+    "correlation_id": "04a0199a-6d1f-4f88-a40e-bfa74024f4bd",
+    "started_at": "2026-11-21T11:32:13.104428+00:00",
+    "error": null
+  },
+  {
+    "target": "restful-booker",
+    "method": "GET",
+    "url": "https://restful-booker.herokuapp.com/booking/650",
+    "request_headers": {
+      "User-Agent": "python-requests/2.34.2",
+      "Accept-Encoding": "gzip, deflate",
+      "Accept": "application/json",
+      "Connection": "keep-alive",
+      "X-Correlation-ID": "b3dbbf67-2174-41cc-ae70-684ac65c1c9f"
+    },
+    "request_body": null,
+    "status": 404,
+    "response_headers": {
+      "Content-Length": "9",
+      "Content-Type": "text/plain; charset=utf-8",
+      "Date": "Sat, 21 Nov 2026 11:32:13 GMT",
+      "Etag": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\"",
+      "Nel": "[policy not stored]",
+      "Report-To": "[policy not stored]",
+      "Reporting-Endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=NadmX4HTwLMucaBExhY4MrBbyWGrYlKPxujLM6DWM5Y%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1795260733\"",
+      "Server": "Heroku",
+      "Via": "1.1 heroku-router",
+      "X-Powered-By": "Express"
+    },
+    "response_body": "Not Found",
+    "duration_ms": 4.4,
+    "correlation_id": "b3dbbf67-2174-41cc-ae70-684ac65c1c9f",
+    "started_at": "2026-11-21T11:32:13.109815+00:00",
+    "error": null
+  }
+]
